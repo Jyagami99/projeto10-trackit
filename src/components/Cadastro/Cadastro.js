@@ -4,19 +4,38 @@ import axios from "axios";
 import styled from "styled-components";
 
 import logo from "../../assets/images/logo.png";
+import { useState } from "react/cjs/react.production.min";
 
 export default function Cadastro() {
 	const URL =
 		"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
 	const navigate = useNavigate;
+	const [isLoading, setIsLoading] = useState(false);
+	const [form, setForm] = useState({
+		email: "",
+		password: "",
+		name: "",
+		image: "",
+	});
 
-	React.useEffect(() => {
+	function handleForm(e) {
+		setForm({ ...form, [e.target.name]: e.target.value });
+	}
+
+	function cadastro() {
 		const promise = axios.post(URL);
-		promise.then((response) => {}).catch((err) => console.log(err));
-	}, []);
+		promise
+			.then(() => {
+				navigate("/");
+			})
+			.catch((err) => console.log(err))
+			.finally(() => setIsLoading(false));
+	}
 
 	function handleSubmit(event) {
 		event.preventDefault();
+		setIsLoading(true);
+		cadastro();
 	}
 
 	return (
@@ -68,6 +87,7 @@ const Container = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-top: 100px;
 
 	img {
 	}
