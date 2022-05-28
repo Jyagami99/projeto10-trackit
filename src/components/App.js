@@ -9,6 +9,7 @@ import Login from "./Login/Login";
 
 export default function App() {
 	const [user, setUser] = React.useState("");
+	console.log(user);
 	return (
 		<BrowserRouter>
 			<UserContext.Provider value={{ user, setUser }}>

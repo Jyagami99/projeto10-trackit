@@ -4,14 +4,13 @@ import axios from "axios";
 import styled from "styled-components";
 
 import logo from "../../assets/images/logo.png";
-import { useState } from "react/cjs/react.production.min";
 
 export default function Cadastro() {
 	const URL =
 		"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
 	const navigate = useNavigate;
-	const [isLoading, setIsLoading] = useState(false);
-	const [form, setForm] = useState({
+	const [pageLoaded, setPageLoaded] = React.useState(false);
+	const [userLoginData, setUserLoginData] = React.useState({
 		email: "",
 		password: "",
 		name: "",
@@ -19,22 +18,22 @@ export default function Cadastro() {
 	});
 
 	function handleForm(e) {
-		setForm({ ...form, [e.target.name]: e.target.value });
+		setUserLoginData({ ...userLoginData, [e.target.name]: e.target.value });
 	}
 
 	function cadastro() {
-		const promise = axios.post(URL);
+		const promise = axios.post(URL, userLoginData);
 		promise
 			.then(() => {
 				navigate("/");
 			})
 			.catch((err) => console.log(err))
-			.finally(() => setIsLoading(false));
+			.finally(() => setPageLoaded(false));
 	}
 
-	function handleSubmit(event) {
-		event.preventDefault();
-		setIsLoading(true);
+	function handleSubmit(e) {
+		e.preventDefault();
+		setPageLoaded(true);
 		cadastro();
 	}
 
@@ -48,28 +47,36 @@ export default function Cadastro() {
 						type="email"
 						name="email"
 						placeholder="email"
-						//onChange={}
+						disabled={pageLoaded}
+						value={userLoginData.email}
+						onChange={handleForm}
 						required
 					/>
 					<Input
 						type="password"
 						name="password"
 						placeholder="senha"
-						//onChange={}
+						disabled={pageLoaded}
+						value={userLoginData.password}
+						onChange={handleForm}
 						required
 					/>
 					<Input
 						type="text"
 						name="name"
 						placeholder="nome"
-						//onChange={}
+						disabled={pageLoaded}
+						value={userLoginData.name}
+						onChange={handleForm}
 						required
 					/>
 					<Input
-						type="text"
+						type="url"
 						name="image"
 						placeholder="foto"
-						//onChange={}
+						disabled={pageLoaded}
+						value={userLoginData.image}
+						onChange={handleForm}
 						required
 					/>
 					<Button type="submit">Entrar</Button>

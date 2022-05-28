@@ -11,7 +11,7 @@ export default function Login() {
 	const URL =
 		"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 	const navigate = useNavigate();
-	const { setUser } = React.useContext(UserContext);
+	const { user, setUser } = React.useContext(UserContext);
 	const [pageLoaded, setPageLoaded] = React.useState(false);
 	const [userLoginData, setUserLoginData] = React.useState({
 		email: "",
@@ -42,7 +42,7 @@ export default function Login() {
 				};
 				localStorage.setItem("userData", JSON.stringify(newUserData));
 				setUser(true);
-				navigate("../today");
+				navigate("../hoje");
 			})
 			.catch((error) => {
 				alert("Usuário e/ou senha inválido(s)");
