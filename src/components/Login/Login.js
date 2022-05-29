@@ -6,12 +6,16 @@ import { ThreeDots } from "react-loader-spinner";
 
 import logo from "../../assets/images/logo.png";
 import UserContext from "../../contexts/UserContexts";
+import UserLoggedInContext from "../../contexts/UserLoggedInContext";
 
 export default function Login() {
 	const URL =
 		"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 	const navigate = useNavigate();
 	const { user, setUser } = React.useContext(UserContext);
+	const { userLoggedIn, setUserLoggedIn } = React.useContext(
+		UserLoggedInContext
+	);
 	const [pageLoaded, setPageLoaded] = React.useState(false);
 	const [userLoginData, setUserLoginData] = React.useState({
 		email: "",
